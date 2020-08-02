@@ -212,7 +212,14 @@ impl Device {
             _ => None,
         };
 
-        handle.start()?;
+        // Start stream, ignoring any buffer underruns
+        handle.start().or_else(|err| {
+            if err.errno() == Some(nix::errno::Errno::EPIPE) {
+                Ok(())
+            } else {
+                Err(err)
+            }
+        })?;
 
         let stream_inner = StreamInner {
             channel: handle,
