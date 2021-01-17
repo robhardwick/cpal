@@ -1,4 +1,6 @@
-use super::coreaudio::sys::{
+extern crate coreaudio;
+
+use self::coreaudio::sys::{
     kAudioHardwareNoError, kAudioHardwarePropertyDefaultInputDevice,
     kAudioHardwarePropertyDefaultOutputDevice, kAudioHardwarePropertyDevices,
     kAudioObjectPropertyElementMaster, kAudioObjectPropertyScopeGlobal, kAudioObjectSystemObject,
@@ -108,9 +110,7 @@ pub fn default_input_device() -> Option<Device> {
         return None;
     }
 
-    let device = Device {
-        audio_device_id: audio_device_id,
-    };
+    let device = Device { audio_device_id };
     Some(device)
 }
 
@@ -137,9 +137,7 @@ pub fn default_output_device() -> Option<Device> {
         return None;
     }
 
-    let device = Device {
-        audio_device_id: audio_device_id,
-    };
+    let device = Device { audio_device_id };
     Some(device)
 }
 
